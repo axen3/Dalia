@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product – SoleStreet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .form-group {
+      position: relative;
+      margin-bottom: 0.5rem;
+      transition: margin-bottom 0.2s ease;
+    }
+    .form-group.has-error {
+      margin-bottom: 1.5rem;
+    }
+    .error-msg {
+      color: #dc2626;
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      display: block;
+      opacity: 0;
+      height: 0;
+      overflow: hidden;
+      transition: opacity 0.2s ease, height 0.2s ease;
+    }
+    .error-msg.show {
+      opacity: 1;
+      height: auto;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #2563eb;
+    }
+    .form-group.error input,
+    .form-group.error textarea {
+      border-color: #dc2626 !important;
+    }
+    .form-note {
+      text-align: center;
+      color: #64748b;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    .submit-feedback {
+      text-align: center;
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      min-height: 1.2rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .submit-feedback.show {
+      opacity: 1;
+    }
+    .submit-feedback.success { color: #16a34a; }
+    .submit-feedback.error { color: #dc2626; }
+    .hidden { display: none !important; }
+
+    /* SUCCESS SCREEN */
+    .success-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+      border: 1px solid #86efac;
+      border-radius: 16px;
+      margin: 2rem 0;
+      animation: fadeIn 0.6s ease-out;
+    }
+    .success-screen.show {
+      display: flex;
+    }
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: #16a34a;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      animation: bounceIn 0.8s ease-out;
+    }
+    .success-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: 0.75rem;
+    }
+    .success-text {
+      font-size: 1rem;
+      color: #166534;
+      margin-bottom: 1.5rem;
+      max-width: 400px;
+    }
+    .back-to-shop {
+      background: #16a34a;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .back-to-shop:hover {
+      background: #15803d;
+      transform: translateY(-2px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounceIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.1); }
+      70% { transform: scale(0.9); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <section class="product-wrapper" id="mainContent">
+    <div class="gallery">
+      <img id="mainImg" class="main-img" src="" alt="Main product" loading="lazy">
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+
+    <div class="details">
+      <div class="brand" id="brand"></div>
+      <h1 class="product-detail-name" id="name"></h1>
+
+      <div class="pricing">
+        <span class="current" id="current"></span>
+        <span class="original" id="original"></span>
+        <span class="discount-badge" id="discount"></span>
+      </div>
+
+      <div class="shipping-info" id="shippingInfo"></div>
+      <p class="description" id="shortDescription"></p>
+
+      <div class="colors" id="colorSwatches"></div>
+      <div class="sizes" id="sizeContainer"><strong>Select Size:</strong><br></div>
+
+      <div class="quantity" id="quantityContainer">
+        <strong>Quantity:</strong><br>
+        <button type="button" id="decreaseQty">-</button>
+        <input type="number" id="quantityInput" value="1" min="1" max="10" readonly>
+        <button type="button" id="increaseQty">+</button>
+      </div>
+
+      <!-- ORDER FORM -->
+      <div id="orderFormContainer">
+        <form id="orderForm" class="order-form" novalidate>
+          <div class="form-group" id="groupFullName">
+            <input type="text" id="fullName" placeholder="Full Name">
+            <span class="error-msg" id="errorFullName"></span>
+          </div>
+          <div class="form-group" id="groupAddress">
+            <textarea id="address" rows="3" placeholder="Address"></textarea>
+            <span class="error-msg" id="errorAddress"></span>
+          </div>
+          <div class="form-group" id="groupCity">
+            <input type="text" id="city" placeholder="City">
+            <span class="error-msg" id="errorCity"></span>
+          </div>
+          <div class="form-group" id="groupPhone">
+            <input type="tel" id="phone" placeholder="Phone Number (10 digits)">
+            <span class="error-msg" id="errorPhone"></span>
+          </div>
+
+          <div class="price-breakdown">
+            <div class="breakdown-line"><span>Product Price:</span><span id="breakdownPrice"></span></div>
+            <div class="breakdown-line"><span>Shipping:</span><span id="breakdownShipping"></span></div>
+            <div class="breakdown-line total"><span>Total:</span><span id="breakdownTotal"></span></div>
+          </div>
+
+          <button type="submit" class="add-cart-btn">Place Order</button>
+          <div class="submit-feedback" id="submitFeedback"></div>
+        </form>
+
+        <p class="form-note"><small>We'll contact you for payment and shipping.</small></p>
+      </div>
+
+      <!-- SUCCESS SCREEN -->
+      <div class="success-screen" id="successScreen">
+        <div class="success-icon">
+          <i class="fas fa-check"></i>
+        </div>
+        <div class="success-title">Order Placed!</div>
+        <div class="success-text">
+          Thank you for your order. We will contact you soon via WhatsApp or call to confirm payment and delivery.
+        </div>
+        <a href="index.html" class="back-to-shop">Back to Shop</a>
+      </div>
+
+      <div class="long-description" id="longDescription"></div>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+
+  <script>
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwXRsrI4gRaJvc4A0BnJU-vJIQASwvqLQ5-eH9jq5O6VzVZ08MwUb7f63KKCYf53tHO/exec'; // PASTE YOUR URL
+
+    let currentProduct = null;
+    let currentShippingCost = 0;
+
+    function updatePriceBreakdown() {
+      if (!currentProduct) return;
+      const qty = parseInt(document.getElementById('quantityInput').value) || 1;
+      const productPrice = currentProduct.price * qty;
+      const total = productPrice + (currentProduct.shipping === 'free' ? 0 : currentShippingCost * qty);
+      document.getElementById('breakdownPrice').textContent = `${productPrice.toFixed(2)} MAD`;
+      document.getElementById('breakdownShipping').textContent = currentProduct.shipping === 'free' ? 'Free' : `${(currentShippingCost * qty).toFixed(2)} MAD`;
+      document.getElementById('breakdownTotal').textContent = `${total.toFixed(2)} MAD`;
+    }
+
+    function showError(fieldId, msg) {
+      const group = document.getElementById(`group${fieldId.charAt(0).toUpperCase() + fieldId.slice(1)}`);
+      const msgEl = document.getElementById(`error${fieldId.charAt(0).toUpperCase() + fieldId.slice(1)}`);
+      group.classList.add('error', 'has-error');
+      msgEl.textContent = msg;
+      msgEl.classList.add('show');
+    }
+
+    function clearError(fieldId) {
+      const group = document.getElementById(`group${fieldId.charAt(0).toUpperCase() + fieldId.slice(1)}`);
+      const msgEl = document.getElementById(`error${fieldId.charAt(0).toUpperCase() + fieldId.slice(1)}`);
+      group.classList.remove('error');
+      msgEl.classList.remove('show');
+      setTimeout(() => {
+        msgEl.textContent = '';
+        group.classList.remove('has-error');
+      }, 200);
+    }
+
+    ['fullName', 'address', 'city', 'phone'].forEach(id => {
+      const input = document.getElementById(id);
+      input.addEventListener('input', () => {
+        if (input.value.trim()) clearError(id);
+        if (id === 'phone' && /^\d{10}$/.test(input.value)) clearError(id);
+      });
+    });
+
+    const feedbackEl = document.getElementById('submitFeedback');
+    function showFeedback(msg, type = 'error') {
+      feedbackEl.textContent = msg;
+      feedbackEl.className = `submit-feedback show ${type}`;
+    }
+    function clearFeedback() {
+      feedbackEl.classList.remove('show');
+      setTimeout(() => { feedbackEl.textContent = ''; feedbackEl.className = 'submit-feedback'; }, 200);
+    }
+
+    async function loadProducts() {
+      const res = await fetch('products.json?v=20251110');
+      if (!res.ok) throw new Error('Failed to load products');
+      return await res.json();
+    }
+
+    async function init() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = parseInt(urlParams.get('id'), 10);
+
+      if (!id || isNaN(id)) {
+        document.body.classList.add('hidden');
+        return;
+      }
+
+      try {
+        const products = await loadProducts();
+        const product = products.find(p => p.id === id);
+        if (!product) {
+          document.body.classList.add('hidden');
+          return;
+        }
+        renderProduct(product);
+      } catch (err) {
+        console.error(err);
+        document.body.classList.add('hidden');
+      }
+    }
+
+    function renderProduct(p) {
+      currentProduct = p;
+      currentShippingCost = (p.shipping === 'free' ? 0 : (p.shipping?.cost || 0));
+
+      document.getElementById('brand').textContent = p.brand;
+      document.getElementById('name').textContent = p.name;
+      document.getElementById('current').textContent = `${p.price.toFixed(2)} MAD`;
+      document.getElementById('shortDescription').textContent = p.shortDescription || '';
+
+      if (p.originalPrice) {
+        const discount = Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100);
+        document.getElementById('original').textContent = `${p.originalPrice.toFixed(2)} MAD`;
+        document.getElementById('discount').textContent = `-${discount}%`;
+      } else {
+        document.getElementById('original').style.display = 'none';
+        document.getElementById('discount').style.display = 'none';
+      }
+
+      const shippingEl = document.getElementById('shippingInfo');
+      if (p.shipping === 'free') {
+        shippingEl.innerHTML = '<i class="fas fa-truck"></i> Free Shipping';
+        shippingEl.style.color = '#16a34a';
+      } else if (p.shipping?.cost) {
+        shippingEl.innerHTML = `<i class="fas fa-truck"></i> Shipping: ${p.shipping.cost.toFixed(2)} MAD`;
+        shippingEl.style.color = '#dc2626';
+      } else {
+        shippingEl.style.display = 'none';
+      }
+
+      const mainImg = document.getElementById('mainImg');
+      mainImg.src = p.images[0] || p.image;
+      const thumbs = document.getElementById('thumbs');
+      thumbs.innerHTML = '';
+      p.images.forEach((src, i) => {
+        const img = document.createElement('img');
+        img.src = src; img.alt = `View ${i + 1}`; img.loading = 'lazy';
+        if (i === 0) img.classList.add('active');
+        img.onclick = () => {
+          mainImg.src = src;
+          thumbs.querySelectorAll('img').forEach(t => t.classList.remove('active'));
+          img.classList.add('active');
+        };
+        thumbs.appendChild(img);
+      });
+
+      const colorDiv = document.getElementById('colorSwatches');
+      colorDiv.innerHTML = '<strong>Select Color:</strong><br>';
+      p.colors.forEach((c, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'color-swatch'; btn.title = c.name;
+        btn.style.backgroundColor = c.hex;
+        btn.style.border = c.hex.toLowerCase() === '#ffffff' ? '2px solid #ddd' : '2px solid transparent';
+        btn.style.width = btn.style.height = '38px';
+        btn.style.margin = '0 0.5rem 0.5rem 0';
+        btn.style.borderRadius = '50%'; btn.style.cursor = 'pointer';
+        const check = document.createElement('i');
+        check.className = 'fas fa-check'; check.style.position = 'absolute';
+        check.style.top = '50%'; check.style.left = '50%';
+        check.style.transform = 'translate(-50%,-50%)'; check.style.color = '#fff';
+        check.style.fontSize = '14px'; check.style.display = 'none';
+        btn.appendChild(check);
+        btn.onclick = () => {
+          colorDiv.querySelectorAll('.color-swatch').forEach(b => {
+            b.classList.remove('active'); b.querySelector('i').style.display = 'none';
+          });
+          btn.classList.add('active'); btn.querySelector('i').style.display = 'block';
+        };
+        if (i === 0) { btn.classList.add('active'); btn.querySelector('i').style.display = 'block'; }
+        colorDiv.appendChild(btn);
+      });
+
+      const sizeContainer = document.getElementById('sizeContainer');
+      sizeContainer.innerHTML = '<strong>Select Size:</strong><br>';
+      (p.sizes || []).forEach((s, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button'; btn.textContent = s;
+        btn.onclick = () => {
+          sizeContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        };
+        if (i === 0) btn.classList.add('active');
+        sizeContainer.appendChild(btn);
+      });
+
+      const qtyInput = document.getElementById('quantityInput');
+      const decreaseBtn = document.getElementById('decreaseQty');
+      const increaseBtn = document.getElementById('increaseQty');
+
+      decreaseBtn.onclick = () => { if (parseInt(qtyInput.value) > 1) { qtyInput.value--; updatePriceBreakdown(); } };
+      increaseBtn.onclick = () => { if (parseInt(qtyInput.value) < 10) { qtyInput.value++; updatePriceBreakdown(); } };
+
+      updatePriceBreakdown();
+
+      const longDescDiv = document.getElementById('longDescription');
+      longDescDiv.innerHTML = '';
+      (p.descriptionBlocks || []).forEach(block => {
+        let el;
+        if (block.type === 'h1') { el = document.createElement('h1'); el.textContent = block.content; }
+        else if (block.type === 'h2') { el = document.createElement('h2'); el.textContent = block.content; }
+        else if (block.type === 'paragraph') { el = document.createElement('p'); el.textContent = block.content; }
+        else if (block.type === 'image') { el = document.createElement('img'); el.src = block.src; el.alt = block.alt || ''; el.loading = 'lazy'; }
+        else if (block.type === 'ul') { el = document.createElement('ul'); (block.items || []).forEach(item => { const li = document.createElement('li'); li.textContent = item; el.appendChild(li); }); }
+        else if (block.type === 'ol') { el = document.createElement('ol'); (block.items || []).forEach(item => { const li = document.createElement('li'); li.textContent = item; el.appendChild(li); }); }
+        if (el) longDescDiv.appendChild(el);
+      });
+    }
+
+    // FORM SUBMIT
+    const form = document.getElementById('orderForm');
+    const formContainer = document.getElementById('orderFormContainer');
+    const successScreen = document.getElementById('successScreen');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearFeedback();
+
+      document.querySelectorAll('.form-group').forEach(g => {
+        g.classList.remove('error', 'has-error');
+        g.querySelector('.error-msg').classList.remove('show');
+      });
+
+      let hasError = false;
+
+      const sizeBtn = document.querySelector('#sizeContainer button.active');
+      const colorBtn = document.querySelector('.color-swatch.active');
+      if (!sizeBtn) { showError('fullName', 'Please select a size'); hasError = true; }
+      if (!colorBtn) { showError('fullName', 'Please select a color'); hasError = true; }
+
+      const fullName = document.getElementById('fullName').value.trim();
+      const address  = document.getElementById('address').value.trim();
+      const city     = document.getElementById('city').value.trim();
+      const phone    = document.getElementById('phone').value.trim();
+      const quantity = document.getElementById('quantityInput').value;
+
+      if (!fullName) { showError('fullName', 'Full Name is required'); hasError = true; }
+      if (!address) { showError('address', 'Address is required'); hasError = true; }
+      if (!city) { showError('city', 'City is required'); hasError = true; }
+      if (!phone) { showError('phone', 'Phone Number is required'); hasError = true; }
+      else if (!/^\d{10}$/.test(phone)) {
+        showError('phone', 'Must be exactly 10 digits (e.g., 0612345678)');
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      const p = currentProduct;
+      const qty = parseInt(quantity);
+      const productPrice = p.price * qty;
+      const shippingCost = (p.shipping === 'free' ? 0 : currentShippingCost * qty);
+
+      const formData = new FormData();
+      formData.append("product_id", p.id);
+      formData.append("product_name", p.name);
+      formData.append("product_color", colorBtn.title);
+      formData.append("product_size", sizeBtn.textContent);
+      formData.append("quantity", qty);
+      formData.append("product_price", productPrice.toFixed(2));
+      formData.append("shipping", p.shipping === 'free' ? 0 : shippingCost.toFixed(2));
+      formData.append("full_name", fullName);
+      formData.append("address", address);
+      formData.append("city", city);
+      formData.append("phone_number", phone);
+
+      const btn = form.querySelector('button[type="submit"]');
+      const oldText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      try {
+        const res = await fetch(WEB_APP_URL, { method: 'POST', body: formData });
+        const raw = await res.text();
+        console.log('RAW RESPONSE:', raw);
+
+        let json;
+        try {
+          json = JSON.parse(raw);
+        } catch (e) {
+          showFeedback('Invalid response. Redeploy Web App!', 'error');
+          btn.textContent = oldText;
+          btn.disabled = false;
+          return;
+        }
+
+        if (json.status === 'success') {
+          // HIDE FORM + SHOW SUCCESS
+          formContainer.style.display = 'none';
+          successScreen.classList.add('show');
+        } else {
+          showFeedback('Error: ' + (json.message || 'Unknown'), 'error');
+          btn.textContent = oldText;
+          btn.disabled = false;
+        }
+      } catch (err) {
+        console.error('Fetch failed:', err);
+        showFeedback('Connection failed. Try again.', 'error');
+        btn.textContent = oldText;
+        btn.disabled = false;
+      }
+    });
+
+    function loadIncludes() {
+      fetch('header.html').then(r => r.ok ? r.text() : '<header><nav><a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a><a href="index.html" class="logo">Sole<span>Street</span></a></nav></header>')
+        .then(h => document.getElementById('header').innerHTML = h);
+      fetch('footer.html').then(r => r.ok ? r.text() : '<footer><p>© SoleStreet</p></footer>')
+        .then(h => document.getElementById('footer').innerHTML = h);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadIncludes();
+      init();
+    });
+  </script>
+
+  <style>
+    .order-form { margin-top:1.5rem; }
+    .price-breakdown { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin:1.5rem 0; font-size:0.95rem; }
+    .breakdown-line { display:flex; justify-content:space-between; margin-bottom:0.5rem; }
+    .breakdown-line.total { font-weight:700; font-size:1.1rem; color:#1e293b; margin-top:0.75rem; padding-top:0.75rem; border-top:1px solid #e2e8f0; }
+    .sizes button, .color-swatch, #decreaseQty, #increaseQty { margin:.25rem .5rem .25rem 0; padding:.5rem .9rem; border:2px solid var(--border); background:#fff; border-radius:8px; cursor:pointer; transition:var(--transition); font-size:.9rem; }
+    .sizes button.active, .color-swatch.active { border-color:var(--primary); background:var(--primary); color:#fff; }
+    .color-swatch { padding:0; width:38px; height:38px; border-radius:50%; position:relative; }
+    .color-swatch.active { border-color:var(--primary)!important; transform:scale(1.12); box-shadow:0 0 0 3px rgba(37,99,235,.2); }
+    .shipping-info { font-size:0.95rem; font-weight:500; margin:0.75rem 0; display:flex; align-items:center; gap:0.5rem; }
+    .shipping-info i { font-size:1.1rem; }
+    .quantity { margin:1rem 0; display:flex; align-items:center; gap:0.5rem; }
+    #quantityInput { width:60px; text-align:center; padding:.5rem; border:2px solid var(--border); border-radius:8px; font-size:1rem; -moz-appearance:textfield; }
+    #quantityInput::-webkit-outer-spin-button, #quantityInput::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+    #decreaseQty, #increaseQty { width:40px; height:40px; font-weight:bold; font-size:1.2rem; display:flex; align-items:center; justify-content:center; }
+    .long-description { margin-top:2.5rem; line-height:1.7; }
+    .long-description h1 { font-size:1.9rem; margin:1.5rem 0 .75rem; color:#1e293b; }
+    .long-description h2 { font-size:1.6rem; margin:1.25rem 0 .5rem; color:#1e293b; }
+    .long-description p { margin-bottom:.75rem; }
+    .long-description img { max-width:100%; height:auto; border-radius:12px; margin:1.5rem 0; box-shadow:0 4px 12px rgba(0,0,0,.1); }
+    .long-description ul, .long-description ol { margin:1rem 0; padding-left:1.5rem; }
+    .long-description li { margin-bottom:.4rem; }
+  </style>
+</body>
+</html>
