@@ -119,10 +119,57 @@
       font-weight: 600;
       text-decoration: none;
       transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     .back-to-shop:hover {
       background: #15803d;
       transform: translateY(-2px);
+    }
+
+    .order-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+    .add-cart-btn {
+      background: #2563eb;
+      color: white;
+      padding: 0.9rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .add-cart-btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+    .whatsapp-order-btn {
+      background: #25d366;
+      color: white;
+      padding: 0.9rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      transition: all 0.3s;
+    }
+    .whatsapp-order-btn:hover {
+      background: #128c7e;
+      transform: translateY(-2px);
+    }
+    .whatsapp-order-btn i {
+      font-size: 1.4rem;
     }
 
     @keyframes fadeIn {
@@ -134,6 +181,41 @@
       50% { transform: scale(1.1); }
       70% { transform: scale(0.9); }
       100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* RATING STARS */
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.75rem 0;
+      font-size: 0.95rem;
+      color: #1e293b;
+    }
+    .stars {
+      color: #f59e0b;
+      font-size: 1.1rem;
+    }
+    .stars .fa-star-half-stroke { color: #fbbf24; }
+    .review-count {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    /* DYNAMIC ERROR FOR COLORS & SIZES */
+    .option-error {
+      color: #dc2626;
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      display: block;
+      opacity: 0;
+      height: 0;
+      overflow: hidden;
+      transition: opacity 0.2s ease, height 0.2s ease;
+    }
+    .option-error.show {
+      opacity: 1;
+      height: auto;
     }
   </style>
 </head>
@@ -151,6 +233,18 @@
       <div class="brand" id="brand"></div>
       <h1 class="product-detail-name" id="name"></h1>
 
+      <!-- RATING -->
+      <div class="rating" id="ratingContainer">
+        <div class="stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-stroke"></i>
+        </div>
+        <span><strong>4.8</strong> <span class="review-count">(127 reviews)</span></span>
+      </div>
+
       <div class="pricing">
         <span class="current" id="current"></span>
         <span class="original" id="original"></span>
@@ -160,8 +254,17 @@
       <div class="shipping-info" id="shippingInfo"></div>
       <p class="description" id="shortDescription"></p>
 
-      <div class="colors" id="colorSwatches"></div>
-      <div class="sizes" id="sizeContainer"><strong>Select Size:</strong><br></div>
+      <!-- DYNAMIC COLORS -->
+      <div class="colors" id="colorSwatches" style="display:none;">
+        <strong>Select Color:</strong><br>
+        <div id="colorError" class="option-error"></div>
+      </div>
+
+      <!-- DYNAMIC SIZES -->
+      <div class="sizes" id="sizeContainer" style="display:none;">
+        <strong>Select Size:</strong><br>
+        <div id="sizeError" class="option-error"></div>
+      </div>
 
       <div class="quantity" id="quantityContainer">
         <strong>Quantity:</strong><br>
@@ -196,11 +299,18 @@
             <div class="breakdown-line total"><span>Total:</span><span id="breakdownTotal"></span></div>
           </div>
 
-          <button type="submit" class="add-cart-btn">Place Order</button>
+          <!-- DUAL ORDER BUTTONS -->
+          <div class="order-buttons">
+            <button type="submit" class="add-cart-btn">Place Order (Save in Sheet)</button>
+            <a href="#" id="whatsappOrderBtn" class="whatsapp-order-btn">
+              <i class="fab fa-whatsapp"></i> Order via WhatsApp
+            </a>
+          </div>
+
           <div class="submit-feedback" id="submitFeedback"></div>
         </form>
 
-        <p class="form-note"><small>We'll contact you for payment and shipping.</small></p>
+        <p class="form-note"><small>Choose your preferred way to order.</small></p>
       </div>
 
       <!-- SUCCESS SCREEN -->
@@ -208,9 +318,9 @@
         <div class="success-icon">
           <i class="fas fa-check"></i>
         </div>
-        <div class="success-title">Order Placed!</div>
+        <div class="success-title">Order Sent!</div>
         <div class="success-text">
-          Thank you for your order. We will contact you soon via WhatsApp or call to confirm payment and delivery.
+          Your order has been saved. We will contact you soon.
         </div>
         <a href="index.html" class="back-to-shop">Back to Shop</a>
       </div>
@@ -222,10 +332,13 @@
   <div id="footer"></div>
 
   <script>
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwXRsrI4gRaJvc4A0BnJU-vJIQASwvqLQ5-eH9jq5O6VzVZ08MwUb7f63KKCYf53tHO/exec'; // PASTE YOUR URL
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycby8h3Q91EeE4kgt7IxaGmT1-y0jp46zVY-5Kd6BbGNgA1v2r20HaXsxER9SdYk5N4gC/exec';
+    const WHATSAPP_NUMBER = '212612345678'; // CHANGE TO YOUR NUMBER
 
     let currentProduct = null;
     let currentShippingCost = 0;
+    let hasColors = false;
+    let hasSizes = false;
 
     function updatePriceBreakdown() {
       if (!currentProduct) return;
@@ -240,28 +353,50 @@
     function showError(fieldId, msg) {
       const group = document.getElementById(`group${fieldId.charAt(0).toUpperCase() + fieldId.slice(1)}`);
       const msgEl = document.getElementById(`error${fieldId.charAt(0).toUpperCase() + fieldId.slice(1)}`);
-      group.classList.add('error', 'has-error');
-      msgEl.textContent = msg;
-      msgEl.classList.add('show');
+      if (group && msgEl) {
+        group.classList.add('error', 'has-error');
+        msgEl.textContent = msg;
+        msgEl.classList.add('show');
+      }
     }
 
     function clearError(fieldId) {
       const group = document.getElementById(`group${fieldId.charAt(0).toUpperCase() + fieldId.slice(1)}`);
       const msgEl = document.getElementById(`error${fieldId.charAt(0).toUpperCase() + fieldId.slice(1)}`);
-      group.classList.remove('error');
-      msgEl.classList.remove('show');
-      setTimeout(() => {
-        msgEl.textContent = '';
-        group.classList.remove('has-error');
-      }, 200);
+      if (group && msgEl) {
+        group.classList.remove('error');
+        msgEl.classList.remove('show');
+        setTimeout(() => {
+          msgEl.textContent = '';
+          group.classList.remove('has-error');
+        }, 200);
+      }
+    }
+
+    // Clear option errors
+    function showOptionError(id, msg) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.textContent = msg;
+        el.classList.add('show');
+      }
+    }
+    function clearOptionError(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.remove('show');
+        setTimeout(() => { el.textContent = ''; }, 200);
+      }
     }
 
     ['fullName', 'address', 'city', 'phone'].forEach(id => {
       const input = document.getElementById(id);
-      input.addEventListener('input', () => {
-        if (input.value.trim()) clearError(id);
-        if (id === 'phone' && /^\d{10}$/.test(input.value)) clearError(id);
-      });
+      if (input) {
+        input.addEventListener('input', () => {
+          if (input.value.trim()) clearError(id);
+          if (id === 'phone' && /^\d{10}$/.test(input.value)) clearError(id);
+        });
+      }
     });
 
     const feedbackEl = document.getElementById('submitFeedback');
@@ -275,7 +410,7 @@
     }
 
     async function loadProducts() {
-      const res = await fetch('products.json?v=20251110');
+      const res = await fetch('products.json?v=20251111');
       if (!res.ok) throw new Error('Failed to load products');
       return await res.json();
     }
@@ -311,6 +446,21 @@
       document.getElementById('name').textContent = p.name;
       document.getElementById('current').textContent = `${p.price.toFixed(2)} MAD`;
       document.getElementById('shortDescription').textContent = p.shortDescription || '';
+
+      // RATING
+      const ratingContainer = document.getElementById('ratingContainer');
+      const rating = p.rating || 4.8;
+      const reviews = p.reviews || 127;
+      const fullStars = Math.floor(rating);
+      const hasHalf = rating % 1 >= 0.5;
+      let starsHTML = '';
+      for (let i = 0; i < fullStars; i++) starsHTML += '<i class="fas fa-star"></i>';
+      if (hasHalf) starsHTML += '<i class="fas fa-star-half-stroke"></i>';
+      for (let i = fullStars + (hasHalf ? 1 : 0); i < 5; i++) starsHTML += '<i class="far fa-star"></i>';
+      ratingContainer.innerHTML = `
+        <div class="stars">${starsHTML}</div>
+        <span><strong>${rating.toFixed(1)}</strong> <span class="review-count">(${reviews} reviews)</span></span>
+      `;
 
       if (p.originalPrice) {
         const discount = Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100);
@@ -348,44 +498,67 @@
         thumbs.appendChild(img);
       });
 
+      // === DYNAMIC COLORS ===
       const colorDiv = document.getElementById('colorSwatches');
-      colorDiv.innerHTML = '<strong>Select Color:</strong><br>';
-      p.colors.forEach((c, i) => {
-        const btn = document.createElement('button');
-        btn.type = 'button'; btn.className = 'color-swatch'; btn.title = c.name;
-        btn.style.backgroundColor = c.hex;
-        btn.style.border = c.hex.toLowerCase() === '#ffffff' ? '2px solid #ddd' : '2px solid transparent';
-        btn.style.width = btn.style.height = '38px';
-        btn.style.margin = '0 0.5rem 0.5rem 0';
-        btn.style.borderRadius = '50%'; btn.style.cursor = 'pointer';
-        const check = document.createElement('i');
-        check.className = 'fas fa-check'; check.style.position = 'absolute';
-        check.style.top = '50%'; check.style.left = '50%';
-        check.style.transform = 'translate(-50%,-50%)'; check.style.color = '#fff';
-        check.style.fontSize = '14px'; check.style.display = 'none';
-        btn.appendChild(check);
-        btn.onclick = () => {
-          colorDiv.querySelectorAll('.color-swatch').forEach(b => {
-            b.classList.remove('active'); b.querySelector('i').style.display = 'none';
-          });
-          btn.classList.add('active'); btn.querySelector('i').style.display = 'block';
-        };
-        if (i === 0) { btn.classList.add('active'); btn.querySelector('i').style.display = 'block'; }
-        colorDiv.appendChild(btn);
-      });
+      if (Array.isArray(p.colors) && p.colors.length > 0) {
+        hasColors = true;
+        colorDiv.style.display = 'block';
+        const swatchContainer = document.createElement('div');
+        swatchContainer.style.marginTop = '0.5rem';
+        p.colors.forEach((c, i) => {
+          const btn = document.createElement('button');
+          btn.type = 'button'; btn.className = 'color-swatch'; btn.title = c.name;
+          btn.style.backgroundColor = c.hex;
+          btn.style.border = c.hex.toLowerCase() === '#ffffff' ? '2px solid #ddd' : '2px solid transparent';
+          btn.style.width = btn.style.height = '38px';
+          btn.style.margin = '0 0.5rem 0.5rem 0';
+          btn.style.borderRadius = '50%'; btn.style.cursor = 'pointer';
+          const check = document.createElement('i');
+          check.className = 'fas fa-check'; check.style.position = 'absolute';
+          check.style.top = '50%'; check.style.left = '50%';
+          check.style.transform = 'translate(-50%,-50%)'; check.style.color = '#fff';
+          check.style.fontSize = '14px'; check.style.display = 'none';
+          btn.appendChild(check);
+          btn.onclick = () => {
+            colorDiv.querySelectorAll('.color-swatch').forEach(b => {
+              b.classList.remove('active'); b.querySelector('i').style.display = 'none';
+            });
+            btn.classList.add('active'); btn.querySelector('i').style.display = 'block';
+            clearOptionError('colorError');
+          };
+          if (i === 0) { btn.classList.add('active'); btn.querySelector('i').style.display = 'block'; }
+          swatchContainer.appendChild(btn);
+        });
+        colorDiv.appendChild(swatchContainer);
+      } else {
+        hasColors = false;
+        colorDiv.style.display = 'none';
+      }
 
+      // === DYNAMIC SIZES ===
       const sizeContainer = document.getElementById('sizeContainer');
-      sizeContainer.innerHTML = '<strong>Select Size:</strong><br>';
-      (p.sizes || []).forEach((s, i) => {
-        const btn = document.createElement('button');
-        btn.type = 'button'; btn.textContent = s;
-        btn.onclick = () => {
-          sizeContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-        };
-        if (i === 0) btn.classList.add('active');
-        sizeContainer.appendChild(btn);
-      });
+      if (Array.isArray(p.sizes) && p.sizes.length > 0) {
+        hasSizes = true;
+        sizeContainer.style.display = 'block';
+        const btnContainer = document.createElement('div');
+        btnContainer.style.marginTop = '0.5rem';
+        p.sizes.forEach((s, i) => {
+          const btn = document.createElement('button');
+          btn.type = 'button'; btn.textContent = s;
+          btn.style.margin = '0 0.5rem 0.5rem 0';
+          btn.onclick = () => {
+            sizeContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            clearOptionError('sizeError');
+          };
+          if (i === 0) btn.classList.add('active');
+          btnContainer.appendChild(btn);
+        });
+        sizeContainer.appendChild(btnContainer);
+      } else {
+        hasSizes = false;
+        sizeContainer.style.display = 'none';
+      }
 
       const qtyInput = document.getElementById('quantityInput');
       const decreaseBtn = document.getElementById('decreaseQty');
@@ -410,26 +583,56 @@
       });
     }
 
-    // FORM SUBMIT
+    // === DUAL ORDER SYSTEM WITH PROPER ERROR PLACEMENT ===
     const form = document.getElementById('orderForm');
     const formContainer = document.getElementById('orderFormContainer');
     const successScreen = document.getElementById('successScreen');
+    const whatsappBtn = document.getElementById('whatsappOrderBtn');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       clearFeedback();
+      const validation = validateForm();
+      if (!validation.valid) { showFeedback(validation.msg, 'error'); return; }
+      await submitToSheet(validation.data);
+    });
 
+    whatsappBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      clearFeedback();
+      const validation = validateForm();
+      if (!validation.valid) { showFeedback(validation.msg, 'error'); return; }
+      openWhatsApp(validation.data);
+    });
+
+    function validateForm() {
+      // Clear all errors
       document.querySelectorAll('.form-group').forEach(g => {
         g.classList.remove('error', 'has-error');
         g.querySelector('.error-msg').classList.remove('show');
       });
+      clearOptionError('colorError');
+      clearOptionError('sizeError');
 
       let hasError = false;
 
-      const sizeBtn = document.querySelector('#sizeContainer button.active');
-      const colorBtn = document.querySelector('.color-swatch.active');
-      if (!sizeBtn) { showError('fullName', 'Please select a size'); hasError = true; }
-      if (!colorBtn) { showError('fullName', 'Please select a color'); hasError = true; }
+      // Validate colors
+      if (hasColors) {
+        const colorBtn = document.querySelector('.color-swatch.active');
+        if (!colorBtn) {
+          showOptionError('colorError', 'Please select a color');
+          hasError = true;
+        }
+      }
+
+      // Validate sizes
+      if (hasSizes) {
+        const sizeBtn = document.querySelector('#sizeContainer button.active');
+        if (!sizeBtn) {
+          showOptionError('sizeError', 'Please select a size');
+          hasError = true;
+        }
+      }
 
       const fullName = document.getElementById('fullName').value.trim();
       const address  = document.getElementById('address').value.trim();
@@ -446,27 +649,40 @@
         hasError = true;
       }
 
-      if (hasError) return;
+      if (hasError) return { valid: false, msg: 'Please fix errors above.' };
 
       const p = currentProduct;
       const qty = parseInt(quantity);
       const productPrice = p.price * qty;
       const shippingCost = (p.shipping === 'free' ? 0 : currentShippingCost * qty);
+      const colorBtn = hasColors ? document.querySelector('.color-swatch.active') : null;
+      const sizeBtn = hasSizes ? document.querySelector('#sizeContainer button.active') : null;
 
+      return {
+        valid: true,
+        data: {
+          p, qty, productPrice, shippingCost,
+          color: colorBtn ? colorBtn.title : 'N/A',
+          size: sizeBtn ? sizeBtn.textContent : 'N/A'
+        }
+      };
+    }
+
+    async function submitToSheet({ p, qty, productPrice, shippingCost, color, size }) {
       const formData = new FormData();
       formData.append("product_id", p.id);
       formData.append("product_name", p.name);
-      formData.append("product_color", colorBtn.title);
-      formData.append("product_size", sizeBtn.textContent);
+      formData.append("product_color", color);
+      formData.append("product_size", size);
       formData.append("quantity", qty);
       formData.append("product_price", productPrice.toFixed(2));
       formData.append("shipping", p.shipping === 'free' ? 0 : shippingCost.toFixed(2));
-      formData.append("full_name", fullName);
-      formData.append("address", address);
-      formData.append("city", city);
-      formData.append("phone_number", phone);
+      formData.append("full_name", document.getElementById('fullName').value.trim());
+      formData.append("address", document.getElementById('address').value.trim());
+      formData.append("city", document.getElementById('city').value.trim());
+      formData.append("phone_number", document.getElementById('phone').value.trim());
 
-      const btn = form.querySelector('button[type="submit"]');
+      const btn = form.querySelector('.add-cart-btn');
       const oldText = btn.textContent;
       btn.disabled = true;
       btn.textContent = 'Sending...';
@@ -474,34 +690,52 @@
       try {
         const res = await fetch(WEB_APP_URL, { method: 'POST', body: formData });
         const raw = await res.text();
-        console.log('RAW RESPONSE:', raw);
-
-        let json;
-        try {
-          json = JSON.parse(raw);
-        } catch (e) {
-          showFeedback('Invalid response. Redeploy Web App!', 'error');
-          btn.textContent = oldText;
-          btn.disabled = false;
-          return;
-        }
+        let json = JSON.parse(raw);
 
         if (json.status === 'success') {
-          // HIDE FORM + SHOW SUCCESS
-          formContainer.style.display = 'none';
-          successScreen.classList.add('show');
+          showSuccess('Order Saved!', 'Your order is in our system. We will contact you soon.');
         } else {
           showFeedback('Error: ' + (json.message || 'Unknown'), 'error');
-          btn.textContent = oldText;
-          btn.disabled = false;
         }
       } catch (err) {
-        console.error('Fetch failed:', err);
         showFeedback('Connection failed. Try again.', 'error');
+      } finally {
         btn.textContent = oldText;
         btn.disabled = false;
       }
-    });
+    }
+
+    function openWhatsApp({ p, qty, productPrice, shippingCost, color, size }) {
+      const msg = encodeURIComponent(
+`*طلب جديد من SoleStreet.ma*\n\n` +
+`المنتج: ${p.name}\n` +
+(hasColors ? `اللون: ${color}\n` : '') +
+(hasSizes ? `المقاس: ${size}\n` : '') +
+`الكمية: ${qty}\n` +
+`سعر المنتج: ${productPrice.toFixed(2)} درهم\n` +
+`التوصيل: ${p.shipping === 'free' ? 'مجاني' : shippingCost.toFixed(2) + ' درهم'}\n` +
+`الإجمالي: ${(productPrice + shippingCost).toFixed(2)} درهم\n\n` +
+`العميل:\n` +
+`الاسم: ${document.getElementById('fullName').value.trim()}\n` +
+`العنوان: ${document.getElementById('address').value.trim()}\n` +
+`المدينة: ${document.getElementById('city').value.trim()}\n` +
+`رقم الهاتف: ${document.getElementById('phone').value.trim()}\n\n` +
+`شكراً لثقتكم!`
+      );
+
+      showSuccess('Opening WhatsApp...', 'Your order is ready. Confirm with us on WhatsApp.', 'fab fa-whatsapp');
+      setTimeout(() => {
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+      }, 800);
+    }
+
+    function showSuccess(title, text, icon = 'fas fa-check') {
+      formContainer.style.display = 'none';
+      successScreen.querySelector('.success-icon i').className = icon;
+      successScreen.querySelector('.success-title').textContent = title;
+      successScreen.querySelector('.success-text').textContent = text;
+      successScreen.classList.add('show');
+    }
 
     function loadIncludes() {
       fetch('header.html').then(r => r.ok ? r.text() : '<header><nav><a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a><a href="index.html" class="logo">Sole<span>Street</span></a></nav></header>')
