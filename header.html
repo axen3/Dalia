@@ -1,12 +1,26 @@
 <header>
-  <nav>
+  <nav class="main-nav">
+    <!-- LOGO -->
     <a href="index.html" class="logo">Sole<span>Street</span></a>
-    <ul class="nav-links">
-      <li><a href="#">Home</a></li>
+
+    <!-- MOBILE MENU TOGGLE -->
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- NAV LINKS (Desktop: Center | Mobile: Dropdown) -->
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
       <li><a href="#">Men</a></li>
       <li><a href="#">Women</a></li>
       <li><a href="#">Sale</a></li>
       <li><a href="#">Contact</a></li>
     </ul>
+
+    <!-- LANGUAGE SWITCHER -->
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="ar">العربية</button>
+      <button class="lang-btn" data-lang="fr">Français</button>
+    </div>
   </nav>
 </header>
