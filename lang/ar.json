@@ -1,0 +1,31 @@
+{
+  "page_title": "SoleStreet - متجر أحذية عصري",
+  "hero_title": "ادخل عالم الأناقة",
+  "hero_subtitle": "اكتشف أحذية فاخرة مصممة لراحتك وأناقة حياتك اليومية.",
+  "featured_title": "المجموعة المميزة",
+
+  "select_color": "اختر اللون:",
+  "select_size": "اختر المقاس:",
+  "quantity": "الكمية:",
+  "product_price": "سعر المنتج:",
+  "shipping": "التوصيل:",
+  "total": "الإجمالي:",
+  "place_order": "تأكيد الطلب (حفظ في الجدول)",
+  "whatsapp_order": "طلب عبر واتساب",
+  "choose_method": "اختر طريقة الطلب.",
+
+  "full_name": "الاسم الكامل",
+  "address": "العنوان",
+  "city": "المدينة",
+  "phone": "رقم الهاتف (10 أرقام)",
+
+  "reviews": "تقييمات",
+  "free_shipping": "توصيل مجاني",
+
+  "order_saved": "تم حفظ الطلب!",
+  "order_saved_text": "تم حفظ طلبك. سنتواصل معك قريباً.",
+  "back_to_shop": "العودة إلى المتجر",
+
+  "opening_whatsapp": "جاري فتح واتساب...",
+  "whatsapp_text": "سيتم فتح واتساب لإكمال طلبك."
+}

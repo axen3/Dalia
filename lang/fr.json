@@ -1,1 +1,31 @@
+{
+  "page_title": "SoleStreet - Boutique de chaussures moderne",
+  "hero_title": "Entrez dans le monde de l'élégance",
+  "hero_subtitle": "Découvrez des chaussures luxueuses conçues pour votre confort et votre style quotidien.",
+  "featured_title": "Collection en vedette",
 
+  "select_color": "Choisir la couleur :",
+  "select_size": "Choisir la taille :",
+  "quantity": "Quantité :",
+  "product_price": "Prix produit :",
+  "shipping": "Livraison :",
+  "total": "Total :",
+  "place_order": "Confirmer la commande (enregistrer)",
+  "whatsapp_order": "Commander via WhatsApp",
+  "choose_method": "Choisissez votre méthode de commande.",
+
+  "full_name": "Nom complet",
+  "address": "Adresse",
+  "city": "Ville",
+  "phone": "Numéro de téléphone (10 chiffres)",
+
+  "reviews": "avis",
+  "free_shipping": "Livraison gratuite",
+
+  "order_saved": "Commande enregistrée !",
+  "order_saved_text": "Votre commande a été enregistrée. Nous vous contacterons bientôt.",
+  "back_to_shop": "Retour à la boutique",
+
+  "opening_whatsapp": "Ouverture de WhatsApp...",
+  "whatsapp_text": "WhatsApp s'ouvre pour finaliser votre commande."
+}
