@@ -5,58 +5,342 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="page_title">SoleStreet - متجر أحذية عصري</title>
 
-  <!-- GOOGLE FONTS -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FONTS + ICONS -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
 
   <style>
-    /* ARABIC FONT – TEXT ONLY */
-    html[lang="ar"] {
-      font-family: 'Noto Sans Arabic', 'Inter', sans-serif !important;
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=Inter:wght@400;500;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-attachment: fixed;
+    }
+
+    /* ARABIC TEXT */
+    html[lang="ar"] { 
+      font-family: 'Noto Sans Arabic', sans-serif !important; 
       line-height: 1.8;
     }
 
-    /* PROTECT FONT AWESOME ICONS */
-    html[lang="ar"] i[class^="fa"],
-    html[lang="ar"] i[class*=" fa-"] {
-      font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+    html[lang="fr"] {
+      font-family: 'Inter', sans-serif !important;
+    }
+
+    /* FONT AWESOME ICONS (SAFE) */
+    html[lang="ar"] [class*="fa-"], 
+    html[lang="ar"] [class^="fa"] { 
+      font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important; 
       font-weight: 900 !important;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
-    html[lang="ar"] i {
-      font-style: normal !important;
+    /* HERO SECTION - Enhanced */
+    .hero {
+      position: relative;
+      padding: 8rem 2rem 6rem;
+      text-align: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
     }
 
-    /* MOBILE: 1 PRODUCT PER ROW */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="white" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.3;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(100px, 100px); }
+    }
+
+    .hero h1 {
+      position: relative;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .hero p {
+      position: relative;
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.95);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      background: white;
+      min-height: 500px;
+      border-radius: 30px 30px 0 0;
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+      position: relative;
+      margin-top: -2rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: #1f2937;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      border-radius: 2px;
+    }
+
+    /* PRODUCTS GRID - Enhanced */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .product-card {
+      text-decoration: none;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);
+    }
+
+    .product-image {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .product-card:hover .product-image img {
+      transform: scale(1.1);
+    }
+
+    .product-info {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-brand {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #667eea;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+      min-height: 2.8rem;
+    }
+
+    .product-pricing {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: auto;
+    }
+
+    .current-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .original-price {
+      font-size: 1rem;
+      color: #9ca3af;
+      text-decoration: line-through;
+    }
+
+    .discount-badge {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .product-variants {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e5e7eb;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    /* LOADING STATE */
+    .loading-skeleton {
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* ERROR STATE */
+    .error-message {
+      text-align: center;
+      padding: 3rem;
+      color: #dc2626;
+      font-size: 1.1rem;
+      background: #fef2f2;
+      border-radius: 12px;
+      border: 2px solid #fee2e2;
+    }
+
+    /* MOBILE RESPONSIVE */
     @media (max-width: 768px) {
-      .products-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+      }
+
+      .hero {
+        padding: 6rem 1.5rem 4rem;
+      }
+
+      .container {
+        padding: 3rem 1.5rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .products-grid { 
+        grid-template-columns: 1fr; 
+        gap: 1.5rem; 
       }
     }
 
     @media (max-width: 480px) {
-      .products-grid {
-        gap: 1rem;
+      .hero h1 {
+        font-size: 2rem;
       }
-      .product-image {
-        height: 180px;
-      }
-      .product-info {
-        padding: 0.75rem;
-      }
-      .product-brand {
-        font-size: 0.8rem;
-      }
-      .product-name {
+
+      .hero p {
         font-size: 1rem;
       }
-      .current-price {
-        font-size: 1.1rem;
+
+      .section-title {
+        font-size: 1.75rem;
       }
+
+      .products-grid { 
+        gap: 1rem; 
+      }
+
+      .product-image { 
+        height: 220px; 
+      }
+
+      .product-info { 
+        padding: 1rem; 
+      }
+
+      .product-brand { 
+        font-size: 0.8rem; 
+      }
+
+      .product-name { 
+        font-size: 1.1rem;
+        min-height: 2.2rem;
+      }
+
+      .current-price { 
+        font-size: 1.3rem; 
+      }
+    }
+
+    /* RTL ADJUSTMENTS */
+    html[dir="rtl"] .product-pricing {
+      flex-direction: row-reverse;
+    }
+
+    /* SMOOTH SCROLLING */
+    html {
+      scroll-behavior: smooth;
     }
   </style>
 </head>
@@ -72,9 +356,7 @@
 
   <div class="container">
     <h2 class="section-title" data-i18n="featured_title">المجموعة المميزة</h2>
-    <div class="products-grid" id="productsGrid">
-      <!-- Products injected by JS -->
-    </div>
+    <div class="products-grid" id="productsGrid"></div>
   </div>
 
   <div id="footer"></div>
@@ -114,29 +396,28 @@
       }
     });
 
-    function t(key) {
-      return translations[key] || key;
-    }
+    function t(key) { return translations[key] || key; }
 
     async function loadProducts() {
       const res = await fetch('products.json?v=20251111');
-      if (!res.ok) throw new Error('Failed to load products');
+      if (!res.ok) throw new Error('Failed');
       return await res.json();
     }
 
     function renderProducts() {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = '<div class="loading-skeleton" style="grid-column: 1/-1; text-align:center; padding:3rem; color:#667eea;">⏳ جاري التحميل...</div>';
+      
       loadProducts().then(products => {
-        const grid = document.getElementById('productsGrid');
         grid.innerHTML = '';
-
         const currency = lang === 'ar' ? ' د.م' : ' MAD';
 
-        products.forEach(p => {
+        products.forEach((p, index) => {
           const discount = p.originalPrice ? Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100) : 0;
-
           const card = document.createElement('a');
           card.href = `product.html?id=${p.id}`;
           card.className = 'product-card';
+          card.style.animationDelay = `${index * 0.05}s`;
 
           card.innerHTML = `
             <div class="product-image">
@@ -155,12 +436,10 @@
               ${p.variants ? `<div class="product-variants">${p.variants}</div>` : ''}
             </div>
           `;
-
           grid.appendChild(card);
         });
-      }).catch(err => {
-        console.error(err);
-        document.getElementById('productsGrid').innerHTML = '<p style="text-align:center;color:#dc2626;">فشل تحميل المنتجات</p>';
+      }).catch(() => {
+        grid.innerHTML = '<div class="error-message">⚠️ فشل تحميل المنتجات. يرجى المحاولة مرة أخرى.</div>';
       });
     }
 
@@ -174,7 +453,7 @@
         });
 
       fetch('footer.html')
-        .then(r => r.ok ? r.text() : '<footer><p>© SoleStreet</p></footer>')
+        .then(r => r.ok ? r.text() : '<footer style="padding:2rem; text-align:center; background:#1f2937; color:white;"><p>© 2025 SoleStreet. All rights reserved.</p></footer>')
         .then(html => document.getElementById('footer').innerHTML = html);
     }
 
@@ -190,9 +469,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      loadLang().then(() => {
-        loadIncludes();
-      });
+      loadLang().then(loadIncludes);
     });
   </script>
 </body>

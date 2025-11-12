@@ -26,9 +26,7 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    html[lang="ar"] i {
-      font-style: normal !important;
-    }
+    html[lang="ar"] i { font-style: normal !important; }
 
     /* RTL: VALUE LEFT, LABEL RIGHT */
     [dir="rtl"] .breakdown-line {
@@ -48,7 +46,7 @@
       margin-top: 0.5rem;
     }
 
-    /* RTL: QUANTITY – LABEL RIGHT, BUTTONS LEFT */
+    /* RTL: QUANTITY */
     [dir="rtl"] .quantity {
       display: flex;
       align-items: center;
@@ -58,16 +56,18 @@
     }
     [dir="rtl"] .quantity strong { order: 2; margin-right: auto; }
     [dir="rtl"] .quantity .quantity-controls { order: 1; display: flex; gap: 0.5rem; }
-    .quantity-controls { display: flex; gap: 0.5rem; }
 
-    /* FORM & SUCCESS */
+    /* FORM VALIDATION */
     .form-group { position: relative; margin-bottom: 0.5rem; transition: margin-bottom 0.2s ease; }
     .form-group.has-error { margin-bottom: 1.5rem; }
     .error-msg, .option-error { color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem; display: block; opacity: 0; height: 0; overflow: hidden; transition: opacity 0.2s ease, height 0.2s ease; }
     .error-msg.show, .option-error.show { opacity: 1; height: auto; }
-    .form-group input, .form-group textarea { width: 100%; padding: 0.75rem; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s; }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 0.75rem; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s;
+    }
     .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #2563eb; }
     .form-group.error input, .form-group.error textarea { border-color: #dc2626 !important; }
+
     .form-note { text-align: center; color: #64748b; margin-top: 1rem; font-size: 0.9rem; }
     .submit-feedback { text-align: center; margin-top: 0.75rem; font-size: 0.9rem; min-height: 1.2rem; opacity: 0; transition: opacity 0.2s; }
     .submit-feedback.show { opacity: 1; }
@@ -75,22 +75,32 @@
     .submit-feedback.error { color: #dc2626; }
     .hidden { display: none !important; }
 
-    .success-screen { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 3rem 1.5rem; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border: 1px solid #86efac; border-radius: 16px; margin: 2rem 0; animation: fadeIn 0.6s ease-out; }
+    /* SUCCESS SCREEN */
+    .success-screen {
+      display: none; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 3rem 1.5rem; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+      border: 1px solid #86efac; border-radius: 16px; margin: 2rem 0; animation: fadeIn 0.6s ease-out;
+    }
     .success-screen.show { display: flex; }
     .success-icon { width: 80px; height: 80px; background: #16a34a; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 1.5rem; animation: bounceIn 0.8s ease-out; }
     .success-title { font-size: 1.8rem; font-weight: 700; color: #166534; margin-bottom: 0.75rem; }
     .success-text { font-size: 1rem; color: #166534; margin-bottom: 1.5rem; max-width: 400px; }
-    .back-to-shop { background: #16a34a; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+    .back-to-shop {
+      background: #16a34a; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600;
+      text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;
+    }
     .back-to-shop:hover { background: #15803d; transform: translateY(-2px); }
 
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.1); } 70% { transform: scale(0.9); } 100% { transform: scale(1); opacity: 1; } }
 
+    /* RATING */
     .rating { display: flex; align-items: center; gap: 0.5rem; margin: 0.75rem 0; font-size: 0.95rem; color: #1e293b; }
     .stars { color: #f59e0b; font-size: 1.1rem; }
     .stars .fa-star-half-stroke { color: #fbbf24; }
     .review-count { color: #64748b; font-size: 0.9rem; }
 
+    /* LONG DESCRIPTION */
     .long-description { margin-top: 2.5rem; line-height: 1.7; }
     .long-description h1 { font-size: 1.9rem; margin: 1.5rem 0 .75rem; color: #1e293b; }
     .long-description h2 { font-size: 1.6rem; margin: 1.25rem 0 .5rem; color: #1e293b; }
@@ -98,6 +108,208 @@
     .long-description img { max-width: 100%; height: auto; border-radius: 12px; margin: 1.5rem 0; box-shadow: 0 4px 12px rgba(0,0,0,.1); }
     .long-description ul, .long-description ol { margin: 1rem 0; padding-left: 1.5rem; }
     .long-description li { margin-bottom: .4rem; }
+
+    /* === IMAGE ZOOM GALLERY === */
+    .gallery {
+      position: relative;
+      max-width: 100%;
+      margin-bottom: 1.5rem;
+    }
+
+    .image-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      cursor: zoom-in;
+      background: #f8f9fa;
+    }
+
+    #mainImg {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+
+    .zoom-lens {
+      position: absolute;
+      border: 2px solid #2563eb;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-repeat: no-repeat;
+      background-size: 300% 300%;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 10;
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.2);
+    }
+
+    .zoom-result {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 400px;
+      border: 4px solid #2563eb;
+      border-radius: 16px;
+      background-repeat: no-repeat;
+      background-size: 300% 300%;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      .zoom-result { width: 300px; height: 300px; }
+      .zoom-lens { width: 100px; height: 100px; }
+    }
+
+    /* THUMBNAILS */
+    .thumbs {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+    }
+
+    .thumbs img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+      opacity: 0.7;
+    }
+
+    .thumbs img:hover, .thumbs img.active {
+      opacity: 1;
+      border-color: #2563eb;
+      transform: scale(1.05);
+    }
+
+    /* QUANTITY CONTROLS */
+    .quantity-controls button {
+      width: 38px;
+      height: 38px;
+      border: 2px solid #cbd5e1;
+      background: white;
+      color: #475569;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quantity-controls button:hover {
+      border-color: #2563eb;
+      color: #2563eb;
+    }
+    .quantity-controls input {
+      width: 50px;
+      text-align: center;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.5rem 0;
+      font-weight: 600;
+    }
+
+    /* COLOR & SIZE SWATCHES */
+    .color-swatch {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .color-swatch.active {
+      border-color: #2563eb;
+      transform: scale(1.1);
+    }
+    .color-swatch i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 14px;
+      display: none;
+    }
+    .color-swatch.active i { display: block; }
+
+    #sizeContainer button {
+      padding: 0.5rem 1rem;
+      border: 2px solid #cbd5e1;
+      background: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-width: 50px;
+    }
+    #sizeContainer button.active {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    /* BUTTONS */
+    .add-cart-btn, .whatsapp-order-btn {
+      padding: 0.875rem 1.5rem;
+      font-weight: 600;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      margin: 0.5rem 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .add-cart-btn {
+      background: #dc2626;
+      color: white;
+      border: none;
+    }
+    .add-cart-btn:hover { background: #b91c1c; transform: translateY(-1px); }
+    .whatsapp-order-btn {
+      background: #25d366;
+      color: white;
+      text-decoration: none;
+    }
+    .whatsapp-order-btn:hover { background: #1da851; transform: translateY(-1px); }
+
+    /* PRICE */
+    .pricing { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; }
+    .current { font-size: 1.75rem; font-weight: 700; color: #dc2626; }
+    .original { font-size: 1.1rem; color: #94a3b8; text-decoration: line-through; }
+    .discount-badge {
+      background: #dc2626; color: white; font-size: 0.85rem; font-weight: 600;
+      padding: 0.25rem 0.5rem; border-radius: 6px;
+    }
+
+    .shipping-info {
+      display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; margin: 0.75rem 0;
+    }
+
+    /* RESPONSIVE */
+    @media (min-width: 768px) {
+      .product-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: start;
+      }
+      .gallery { margin-bottom: 0; }
+    }
   </style>
 </head>
 <body>
@@ -106,7 +318,11 @@
 
   <section class="product-wrapper" id="mainContent">
     <div class="gallery">
-      <img id="mainImg" class="main-img" src="" alt="Main product" loading="lazy">
+      <div class="image-container" id="imageContainer">
+        <img id="mainImg" class="main-img" src="" alt="Main product" loading="lazy">
+        <div class="zoom-lens" id="zoomLens"></div>
+      </div>
+      <div class="zoom-result" id="zoomResult"></div>
       <div class="thumbs" id="thumbs"></div>
     </div>
 
@@ -138,7 +354,7 @@
       <div class="quantity" id="quantityContainer">
         <strong data-i18n="quantity">الكمية:</strong>
         <div class="quantity-controls">
-          <button type="button" id="decreaseQty">-</button>
+          <button type="button" id="decreaseQty">−</button>
           <input type="number" id="quantityInput" value="1" min="1" max="10" readonly>
           <button type="button" id="increaseQty">+</button>
         </div>
@@ -211,9 +427,93 @@
     let lang = localStorage.getItem('lang') || (navigator.language.includes('fr') ? 'fr' : 'ar');
     let translations = {};
 
+    // === IMAGE ZOOM FUNCTIONALITY ===
+    let zoomActive = false;
+    let lens, result, img, cx, cy;
+
+    function initZoom() {
+      img = document.getElementById('mainImg');
+      lens = document.getElementById('zoomLens');
+      result = document.getElementById('zoomResult');
+      const container = document.getElementById('imageContainer');
+
+      if (!img.complete || !lens || !result) return;
+
+      // Set zoom ratio
+      cx = result.offsetWidth / lens.offsetWidth;
+      cy = result.offsetHeight / lens.offsetHeight;
+
+      result.style.backgroundImage = `url('${img.src}')`;
+      result.style.backgroundSize = `${img.naturalWidth * cx}px ${img.naturalHeight * cy}px`;
+
+      const moveLens = (e) => {
+        e.preventDefault();
+        const pos = getCursorPos(e);
+        let x = pos.x - (lens.offsetWidth / 2);
+        let y = pos.y - (lens.offsetHeight / 2);
+
+        // Boundary check
+        if (x > img.width - lens.offsetWidth) x = img.width - lens.offsetWidth;
+        if (x < 0) x = 0;
+        if (y > img.height - lens.offsetHeight) y = img.height - lens.offsetHeight;
+        if (y < 0) y = 0;
+
+        lens.style.left = `${x}px`;
+        lens.style.top = `${y}px`;
+        lens.style.opacity = '1';
+
+        result.style.backgroundPosition = `-${x * cx}px -${y * cy}px`;
+        result.style.display = 'block';
+      };
+
+      const getCursorPos = (e) => {
+        const rect = img.getBoundingClientRect();
+        const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+        return {
+          x: clientX - rect.left,
+          y: clientY - rect.top
+        };
+      };
+
+      const endZoom = () => {
+        lens.style.opacity = '0';
+        result.style.display = 'none';
+      };
+
+      img.addEventListener('mousemove', moveLens);
+      img.addEventListener('touchmove', moveLens, { passive: false });
+      img.addEventListener('mouseenter', () => { if (!zoomActive) lens.style.opacity = '1'; });
+      img.addEventListener('mouseleave', endZoom);
+      img.addEventListener('mousedown', (e) => { e.preventDefault(); zoomActive = true; moveLens(e); });
+      img.addEventListener('mouseup', endZoom);
+      img.addEventListener('touchstart', (e) => { e.preventDefault(); zoomActive = true; moveLens(e); }, { passive: false });
+      img.addEventListener('touchend', endZoom);
+    }
+
+    function updateZoomImage(src) {
+      const mainImg = document.getElementById('mainImg');
+      const result = document.getElementById('zoomResult');
+      mainImg.src = src;
+      result.style.backgroundImage = `url('${src}')`;
+      mainImg.onload = () => {
+        if (lens && result) {
+          cx = result.offsetWidth / lens.offsetWidth;
+          cy = result.offsetHeight / lens.offsetHeight;
+          result.style.backgroundSize = `${mainImg.naturalWidth * cx}px ${mainImg.naturalHeight * cy}px`;
+        }
+      };
+    }
+
+    // === LANGUAGE & TRANSLATIONS ===
     async function loadLang() {
-      const res = await fetch(`lang/${lang}.json?v=${Date.now()}`);
-      translations = await res.json();
+      try {
+        const res = await fetch(`lang/${lang}.json?v=${Date.now()}`);
+        translations = await res.json();
+      } catch (e) {
+        console.warn('Lang file not found, using defaults');
+        translations = {};
+      }
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
       applyTranslations();
@@ -240,6 +540,8 @@
       }
     }
 
+    function t(key) { return translations[key] || key; }
+
     function updateLangButtons() {
       document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === lang);
@@ -254,10 +556,7 @@
       }
     });
 
-    function t(key) {
-      return translations[key] || key;
-    }
-
+    // === PRICE & SHIPPING ===
     function updatePriceBreakdown() {
       if (!currentProduct) return;
       const qty = parseInt(document.getElementById('quantityInput').value) || 1;
@@ -274,16 +573,18 @@
     }
 
     function updateShippingInfo() {
-      const shippingEl = document.getElementById('shippingInfo');
+      const el = document.getElementById('shippingInfo');
+      if (!el || !currentProduct) return;
       if (currentProduct.shipping === 'free') {
-        shippingEl.innerHTML = `<i class="fas fa-truck"></i> ${t('free_shipping')}`;
-        shippingEl.style.color = '#16a34a';
+        el.innerHTML = `<i class="fas fa-truck"></i> ${t('free_shipping')}`;
+        el.style.color = '#16a34a';
       } else if (currentProduct.shipping?.cost) {
-        shippingEl.innerHTML = `<i class="fas fa-truck"></i> ${t('shipping_cost').replace('{{cost}}', currentProduct.shipping.cost.toFixed(2))}`;
-        shippingEl.style.color = '#dc2626';
+        el.innerHTML = `<i class="fas fa-truck"></i> ${currentProduct.shipping.cost.toFixed(2)} د.م`;
+        el.style.color = '#dc2626';
       }
     }
 
+    // === LOAD PRODUCT ===
     async function loadProducts() { 
       const res = await fetch('products.json?v=20251111'); 
       if (!res.ok) throw new Error('Failed'); 
@@ -308,7 +609,7 @@
       
       document.getElementById('brand').textContent = p.brand;
       document.getElementById('name').textContent = p.name;
-      document.getElementById('current').textContent = `${p.price.toFixed(2)} MAD`;
+      document.getElementById('current').textContent = `${p.price.toFixed(2)} د.م`;
       document.getElementById('shortDescription').textContent = p.shortDescription || '';
 
       const ratingContainer = document.getElementById('ratingContainer');
@@ -322,7 +623,7 @@
 
       if (p.originalPrice) {
         const discount = Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100);
-        document.getElementById('original').textContent = `${p.originalPrice.toFixed(2)} MAD`;
+        document.getElementById('original').textContent = `${p.originalPrice.toFixed(2)} د.م`;
         document.getElementById('discount').textContent = `-${discount}%`;
       } else { 
         document.getElementById('original').style.display = 'none'; 
@@ -332,53 +633,72 @@
       updateShippingInfo();
       updatePriceBreakdown();
 
-      const mainImg = document.getElementById('mainImg'); mainImg.src = p.images[0] || p.image;
+      const mainImg = document.getElementById('mainImg');
+      mainImg.src = p.images[0] || p.image;
+      mainImg.onload = initZoom;
+
       const thumbs = document.getElementById('thumbs'); thumbs.innerHTML = '';
       p.images.forEach((src, i) => {
         const img = document.createElement('img'); img.src = src; img.alt = `View ${i + 1}`; img.loading = 'lazy';
         if (i === 0) img.classList.add('active');
-        img.onclick = () => { mainImg.src = src; thumbs.querySelectorAll('img').forEach(t => t.classList.remove('active')); img.classList.add('active'); };
+        img.onclick = () => {
+          updateZoomImage(src);
+          thumbs.querySelectorAll('img').forEach(t => t.classList.remove('active'));
+          img.classList.add('active');
+        };
         thumbs.appendChild(img);
       });
 
+      // Colors
       const colorDiv = document.getElementById('colorSwatches');
       if (Array.isArray(p.colors) && p.colors.length > 0) {
         hasColors = true; colorDiv.style.display = 'block';
-        const swatchContainer = document.createElement('div'); swatchContainer.style.marginTop = '0.5rem';
+        const container = document.createElement('div');
+        container.style.cssText = 'display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;';
         p.colors.forEach((c, i) => {
           const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'color-swatch'; btn.title = c.name;
-          btn.style.backgroundColor = c.hex; btn.style.border = c.hex.toLowerCase() === '#ffffff' ? '2px solid #ddd' : '2px solid transparent';
-          btn.style.width = btn.style.height = '38px'; btn.style.margin = '0 0.5rem 0.5rem 0'; btn.style.borderRadius = '50%'; btn.style.cursor = 'pointer';
-          const check = document.createElement('i'); check.className = 'fas fa-check'; check.style.position = 'absolute'; check.style.top = '50%'; check.style.left = '50%';
-          check.style.transform = 'translate(-50%,-50%)'; check.style.color = '#fff'; check.style.fontSize = '14px'; check.style.display = 'none'; btn.appendChild(check);
-          btn.onclick = () => { colorDiv.querySelectorAll('.color-swatch').forEach(b => { b.classList.remove('active'); b.querySelector('i').style.display = 'none'; }); btn.classList.add('active'); btn.querySelector('i').style.display = 'block'; clearOptionError('colorError'); };
+          btn.style.backgroundColor = c.hex;
+          btn.style.border = c.hex.toLowerCase() === '#ffffff' ? '2px solid #ddd' : '2px solid transparent';
+          const check = document.createElement('i'); check.className = 'fas fa-check';
+          btn.appendChild(check);
+          btn.onclick = () => {
+            colorDiv.querySelectorAll('.color-swatch').forEach(b => {
+              b.classList.remove('active'); b.querySelector('i').style.display = 'none';
+            });
+            btn.classList.add('active'); btn.querySelector('i').style.display = 'block';
+            clearOptionError('colorError');
+          };
           if (i === 0) { btn.classList.add('active'); btn.querySelector('i').style.display = 'block'; }
-          swatchContainer.appendChild(btn);
+          container.appendChild(btn);
         });
-        colorDiv.appendChild(swatchContainer);
+        colorDiv.appendChild(container);
       } else { hasColors = false; colorDiv.style.display = 'none'; }
 
+      // Sizes
       const sizeContainer = document.getElementById('sizeContainer');
       if (Array.isArray(p.sizes) && p.sizes.length > 0) {
         hasSizes = true; sizeContainer.style.display = 'block';
-        const btnContainer = document.createElement('div'); btnContainer.style.marginTop = '0.5rem';
+        const container = document.createElement('div');
+        container.style.cssText = 'display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;';
         p.sizes.forEach((s, i) => {
           const btn = document.createElement('button'); btn.type = 'button'; btn.textContent = s;
-          btn.style.margin = '0 0.5rem 0.5rem 0';
-          btn.onclick = () => { sizeContainer.querySelectorAll('button').forEach(b => b.classList.remove('active')); btn.classList.add('active'); clearOptionError('sizeError'); };
+          btn.onclick = () => {
+            sizeContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            clearOptionError('sizeError');
+          };
           if (i === 0) btn.classList.add('active');
-          btnContainer.appendChild(btn);
+          container.appendChild(btn);
         });
-        sizeContainer.appendChild(btnContainer);
+        sizeContainer.appendChild(container);
       } else { hasSizes = false; sizeContainer.style.display = 'none'; }
 
+      // Quantity
       const qtyInput = document.getElementById('quantityInput');
-      const decreaseBtn = document.getElementById('decreaseQty');
-      const increaseBtn = document.getElementById('increaseQty');
-      decreaseBtn.onclick = () => { if (parseInt(qtyInput.value) > 1) { qtyInput.value--; updatePriceBreakdown(); } };
-      increaseBtn.onclick = () => { if (parseInt(qtyInput.value) < 10) { qtyInput.value++; updatePriceBreakdown(); } };
-      updatePriceBreakdown();
+      document.getElementById('decreaseQty').onclick = () => { if (parseInt(qtyInput.value) > 1) { qtyInput.value--; updatePriceBreakdown(); } };
+      document.getElementById('increaseQty').onclick = () => { if (parseInt(qtyInput.value) < 10) { qtyInput.value++; updatePriceBreakdown(); } };
 
+      // Long Description
       const longDescDiv = document.getElementById('longDescription'); longDescDiv.innerHTML = '';
       (p.descriptionBlocks || []).forEach(block => { 
         let el; 
@@ -392,62 +712,159 @@
       });
     }
 
+    // === FORM VALIDATION ===
+    function showError(fieldId, msg) {
+      const group = document.getElementById(`group${fieldId.charAt(0).toUpperCase() + fieldId.slice(1)}`);
+      const errorEl = document.getElementById(`error${fieldId.charAt(0).toUpperCase() + fieldId.slice(1)}`);
+      group.classList.add('error', 'has-error');
+      errorEl.textContent = msg;
+      errorEl.classList.add('show');
+    }
+
+    function showOptionError(id, msg) {
+      const el = document.getElementById(id);
+      el.textContent = msg;
+      el.classList.add('show');
+    }
+
+    function clearOptionError(id) {
+      const el = document.getElementById(id);
+      el.classList.remove('show');
+    }
+
+    function clearFeedback() {
+      document.querySelectorAll('.form-group').forEach(g => g.classList.remove('error', 'has-error'));
+      document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
+      clearOptionError('colorError'); clearOptionError('sizeError');
+      const feedback = document.getElementById('submitFeedback');
+      feedback.classList.remove('show', 'success', 'error');
+    }
+
+    function showFeedback(msg, type) {
+      const feedback = document.getElementById('submitFeedback');
+      feedback.textContent = msg;
+      feedback.className = `submit-feedback show ${type}`;
+    }
+
     const form = document.getElementById('orderForm');
     const formContainer = document.getElementById('orderFormContainer');
     const successScreen = document.getElementById('successScreen');
     const whatsappBtn = document.getElementById('whatsappOrderBtn');
 
-    form.addEventListener('submit', async (e) => { e.preventDefault(); clearFeedback(); const validation = validateForm(); if (!validation.valid) { showFeedback(validation.msg, 'error'); return; } await submitToSheet(validation.data); });
-    whatsappBtn.addEventListener('click', (e) => { e.preventDefault(); clearFeedback(); const validation = validateForm(); if (!validation.valid) { showFeedback(validation.msg, 'error'); return; } openWhatsApp(validation.data); });
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearFeedback();
+      const validation = validateForm();
+      if (!validation.valid) {
+        showFeedback(validation.msg, 'error');
+        return;
+      }
+      await submitToSheet(validation.data);
+    });
+
+    whatsappBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      clearFeedback();
+      const validation = validateForm();
+      if (!validation.valid) {
+        showFeedback(validation.msg, 'error');
+        return;
+      }
+      openWhatsApp(validation.data);
+    });
 
     function validateForm() {
-      document.querySelectorAll('.form-group').forEach(g => { g.classList.remove('error', 'has-error'); g.querySelector('.error-msg').classList.remove('show'); });
-      clearOptionError('colorError'); clearOptionError('sizeError');
+      clearFeedback();
       let hasError = false;
-      if (hasColors) { const colorBtn = document.querySelector('.color-swatch.active'); if (!colorBtn) { showOptionError('colorError', lang === 'ar' ? 'الرجاء اختيار اللون' : 'Veuillez choisir une couleur'); hasError = true; } }
-      if (hasSizes) { const sizeBtn = document.querySelector('#sizeContainer button.active'); if (!sizeBtn) { showOptionError('sizeError', lang === 'ar' ? 'الرجاء اختيار المقاس' : 'Veuillez choisir une taille'); hasError = true; } }
+
+      if (hasColors && !document.querySelector('.color-swatch.active')) {
+        showOptionError('colorError', lang === 'ar' ? 'الرجاء اختيار اللون' : 'Veuillez choisir une couleur');
+        hasError = true;
+      }
+
+      if (hasSizes && !document.querySelector('#sizeContainer button.active')) {
+        showOptionError('sizeError', lang === 'ar' ? 'الرجاء اختيار المقاس' : 'Veuillez choisir une taille');
+        hasError = true;
+      }
+
       const fullName = document.getElementById('fullName').value.trim();
       const address  = document.getElementById('address').value.trim();
       const city     = document.getElementById('city').value.trim();
       const phone    = document.getElementById('phone').value.trim();
       const quantity = document.getElementById('quantityInput').value;
+
       if (!fullName) { showError('fullName', lang === 'ar' ? 'الاسم الكامل مطلوب' : 'Nom complet requis'); hasError = true; }
       if (!address) { showError('address', lang === 'ar' ? 'العنوان مطلوب' : 'Adresse requise'); hasError = true; }
       if (!city) { showError('city', lang === 'ar' ? 'المدينة مطلوبة' : 'Ville requise'); hasError = true; }
       if (!phone) { showError('phone', lang === 'ar' ? 'رقم الهاتف مطلوب' : 'Numéro requis'); hasError = true; }
       else if (!/^\d{10}$/.test(phone)) { showError('phone', lang === 'ar' ? 'يجب أن يكون 10 أرقام (مثال: 0612345678)' : '10 chiffres requis (ex: 0612345678)'); hasError = true; }
-      if (hasError) return { valid: false, msg: lang === 'ar' ? 'الرجاء تصحيح الأخطاء أعلاه.' : 'Veuillez corriger les erreurs ci-dessus.' };
-      const p = currentProduct; const qty = parseInt(quantity); const productPrice = p.price * qty; const shippingCost = (p.shipping === 'free' ? 0 : currentShippingCost * qty);
-      const colorBtn = hasColors ? document.querySelector('.color-swatch.active') : null; const sizeBtn = hasSizes ? document.querySelector('#sizeContainer button.active') : null;
-      return { valid: true, data: { p, qty, productPrice, shippingCost, color: colorBtn ? colorBtn.title : 'N/A', size: sizeBtn ? sizeBtn.textContent : 'N/A' } };
+
+      if (hasError) {
+        return { valid: false, msg: lang === 'ar' ? 'الرجاء تصحيح الأخطاء أعلاه.' : 'Veuillez corriger les erreurs ci-dessus.' };
+      }
+
+      const p = currentProduct;
+      const qty = parseInt(quantity);
+      const productPrice = p.price * qty;
+      const shippingCost = p.shipping === 'free' ? 0 : currentShippingCost * qty;
+      const color = hasColors ? document.querySelector('.color-swatch.active').title : 'N/A';
+      const size = hasSizes ? document.querySelector('#sizeContainer button.active').textContent : 'N/A';
+
+      return { valid: true, data: { p, qty, productPrice, shippingCost, color, size } };
     }
 
     async function submitToSheet({ p, qty, productPrice, shippingCost, color, size }) {
       const formData = new FormData();
-      formData.append("product_id", p.id); formData.append("product_name", p.name); formData.append("product_color", color); formData.append("product_size", size);
-      formData.append("quantity", qty); formData.append("product_price", productPrice.toFixed(2)); formData.append("shipping", p.shipping === 'free' ? 0 : shippingCost.toFixed(2));
-      formData.append("full_name", document.getElementById('fullName').value.trim()); formData.append("address", document.getElementById('address').value.trim());
-      formData.append("city", document.getElementById('city').value.trim()); formData.append("phone_number", document.getElementById('phone').value.trim());
-      const btn = form.querySelector('.add-cart-btn'); const oldText = btn.textContent; btn.disabled = true; btn.textContent = lang === 'ar' ? 'جاري الإرسال...' : 'Envoi...';
+      formData.append("product_id", p.id);
+      formData.append("product_name", p.name);
+      formData.append("product_color", color);
+      formData.append("product_size", size);
+      formData.append("quantity", qty);
+      formData.append("product_price", productPrice.toFixed(2));
+      formData.append("shipping", p.shipping === 'free' ? 0 : shippingCost.toFixed(2));
+      formData.append("full_name", document.getElementById('fullName').value.trim());
+      formData.append("address", document.getElementById('address').value.trim());
+      formData.append("city", document.getElementById('city').value.trim());
+      formData.append("phone_number", document.getElementById('phone').value.trim());
+
+      const btn = form.querySelector('.add-cart-btn');
+      const oldText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = lang === 'ar' ? 'جاري الإرسال...' : 'Envoi...';
+
       try {
         const res = await fetch(WEB_APP_URL, { method: 'POST', body: formData });
-        const raw = await res.text(); let json = JSON.parse(raw);
-        if (json.status === 'success') showSuccess(t('order_saved'), t('order_saved_text'));
-        else showFeedback('Error: ' + (json.message || 'Unknown'), 'error');
-      } catch (err) { showFeedback(lang === 'ar' ? 'فشل الاتصال. حاول مرة أخرى.' : 'Connexion échouée. Réessayez.', 'error'); }
-      finally { btn.textContent = oldText; btn.disabled = false; }
+        const raw = await res.text();
+        let json = JSON.parse(raw);
+        if (json.status === 'success') {
+          showSuccess(t('order_saved'), t('order_saved_text'));
+        } else {
+          showFeedback('Error: ' + (json.message || 'Unknown'), 'error');
+        }
+      } catch (err) {
+        showFeedback(lang === 'ar' ? 'فشل الاتصال. حاول مرة أخرى.' : 'Connexion échouée. Réessayez.', 'error');
+      } finally {
+        btn.textContent = oldText;
+        btn.disabled = false;
+      }
     }
 
     function openWhatsApp({ p, qty, productPrice, shippingCost, color, size }) {
       const isAr = lang === 'ar';
       const msg = encodeURIComponent(
         (isAr ? `*طلب جديد من SoleStreet.ma*\n\n` : `*Nouvelle commande de SoleStreet.ma*\n\n`) +
-        `${isAr ? 'المنتج' : 'Produit'}: ${p.name}\n` + (hasColors ? `${isAr ? 'اللون' : 'Couleur'}: ${color}\n` : '') + (hasSizes ? `${isAr ? 'المقاس' : 'Taille'}: ${size}\n` : '') +
-        `${isAr ? 'الكمية' : 'Quantité'}: ${qty}\n` + `${isAr ? 'سعر المنتج' : 'Prix produit'}: ${productPrice.toFixed(2)} درهم\n` +
+        `${isAr ? 'المنتج' : 'Produit'}: ${p.name}\n` +
+        (hasColors ? `${isAr ? 'اللون' : 'Couleur'}: ${color}\n` : '') +
+        (hasSizes ? `${isAr ? 'المقاس' : 'Taille'}: ${size}\n` : '') +
+        `${isAr ? 'الكمية' : 'Quantité'}: ${qty}\n` +
+        `${isAr ? 'سعر المنتج' : 'Prix produit'}: ${productPrice.toFixed(2)} درهم\n` +
         `${isAr ? 'التوصيل' : 'Livraison'}: ${p.shipping === 'free' ? t('free_shipping') : shippingCost.toFixed(2) + ' درهم'}\n` +
         `${isAr ? 'الإجمالي' : 'Total'}: ${(productPrice + shippingCost).toFixed(2)} درهم\n\n` +
-        `${isAr ? 'العميل' : 'Client'}:\n` + `الاسم: ${document.getElementById('fullName').value.trim()}\n` + `العنوان: ${document.getElementById('address').value.trim()}\n` +
-        `المدينة: ${document.getElementById('city').value.trim()}\n` + `رقم الهاتف: ${document.getElementById('phone').value.trim()}\n\n` +
+        `${isAr ? 'العميل' : 'Client'}:\n` +
+        `الاسم: ${document.getElementById('fullName').value.trim()}\n` +
+        `العنوان: ${document.getElementById('address').value.trim()}\n` +
+        `المدينة: ${document.getElementById('city').value.trim()}\n` +
+        `رقم الهاتف: ${document.getElementById('phone').value.trim()}\n\n` +
         (isAr ? `شكراً لثقتكم!` : `Merci pour votre confiance !`)
       );
       showSuccess(t('opening_whatsapp'), t('whatsapp_text'), 'fab fa-whatsapp');
