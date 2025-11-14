@@ -3,28 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Spa Bliss - Product</title>
-  <link rel="stylesheet" href="../style.css">
+  <title>ShopX – Product</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body data-page="product">
 
-<header>
-  <div class="container">
-    <h1>Spa Bliss</h1>
-    <nav><a href="../index.html">Home</a></nav>
-  </div>
-</header>
-
+<div id="header"></div>
 <main class="container">
-  <div id="app-content">Loading product...</div>
+  <div id="app-content" class="mt-8"></div>
 </main>
+<div id="footer"></div>
 
-<footer>
-  <div class="container">© 2025 Spa Bliss</div>
-</footer>
+<div id="spinner" class="hidden">
+  <svg class="animate-spin" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" class="opacity-25"></circle>
+    <path fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+  </svg>
+</div>
 
-<div id="spinner" class="spinner"></div>
-
-<script src="../app.js"></script>
+<script type="module">
+  import { loadShared, loadProducts } from '../assets/js/spa.js';
+  import { renderProduct } from '../assets/js/handler.js';
+  await loadShared();
+  await loadProducts();
+  const id = new URLSearchParams(location.search).get('id');
+  if (id) renderProduct(id);
+</script>
 </body>
 </html>
