@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "Lavender Relaxation Oil",
+    "price": 29.99,
+    "image": "https://picsum.photos/seed/spa1/600/600",
+    "description": "100% pure lavender essential oil for deep relaxation and sleep support.",
+    "brand": "AromaZen",
+    "category": "Oils",
+    "inStock": true,
+    "rating": 4.8
+  },
+  {
+    "id": 2,
+    "name": "Eucalyptus Bath Bombs (Pack of 6)",
+    "price": 22.50,
+    "image": "https://picsum.photos/seed/spa2/600/600",
+    "description": "Fizzy eucalyptus bath bombs to clear sinuses and soothe tired muscles.",
+    "brand": "PureSpa",
+    "category": "Bath",
+    "inStock": true,
+    "rating": 4.5
+  },
+  {
+    "id": 3,
+    "name": "Rose Quartz Face Cream",
+    "price": 48.00,
+    "image": "https://picsum.photos/seed/spa3/600/600",
+    "description": "Luxurious anti-aging cream infused with rose quartz and hyaluronic acid.",
+    "brand": "LuminaSkin",
+    "category": "Skincare",
+    "inStock": false,
+    "rating": 4.9
+  },
+  {
+    "id": 4,
+    "name": "Bamboo Body Scrub",
+    "price": 35.00,
+    "image": "https://picsum.photos/seed/spa4/600/600",
+    "description": "Exfoliating scrub with bamboo extract and jojoba beads for silky skin.",
+    "brand": "EcoSpa",
+    "category": "Body Care",
+    "inStock": true,
+    "rating": 4.6
+  },
+  {
+    "id": 5,
+    "name": "Chamomile Herbal Tea Blend",
+    "price": 15.99,
+    "image": "https://picsum.photos/seed/spa5/600/600",
+    "description": "Calming organic chamomile tea with lavender and lemon balm.",
+    "brand": "HerbHaven",
+    "category": "Wellness",
+    "inStock": true,
+    "rating": 4.7
+  }
+]
