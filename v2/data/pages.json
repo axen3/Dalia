@@ -1,0 +1,50 @@
+{
+  "about": {
+    "title": "About Us",
+    "heading": "Who We Are",
+    "content": [
+      { "type": "paragraph", "text": "Welcome to MyStore! We are a modern online store dedicated to providing high-quality products for our customers. Our goal is to make your shopping experience simple, enjoyable, and reliable." },
+      { "type": "paragraph", "text": "We believe in quality, affordability, and excellent customer service. Every product in our store is carefully selected to meet our high standards." },
+      { "type": "image", "src": "https://picsum.photos/800/400?random=101", "alt": "About Us" }
+    ]
+  },
+  "faq": {
+    "title": "FAQ",
+    "heading": "Frequently Asked Questions",
+    "content": [
+      { "type": "paragraph", "text": "Here are answers to some of the most common questions our customers ask." },
+      { "type": "paragraph", "text": "Q: How long does shipping take? A: Standard shipping typically takes 3-7 business days." },
+      { "type": "paragraph", "text": "Q: Can I return a product? A: Yes, you can return products within 30 days of purchase." },
+      { "type": "paragraph", "text": "Q: How can I contact support? A: Use the Contact Us page or email support@mystore.com." }
+    ]
+  },
+  "contact": {
+    "title": "Contact Us",
+    "heading": "Get in Touch",
+    "content": [
+      { "type": "paragraph", "text": "We’d love to hear from you! Reach out with any questions, feedback, or inquiries." },
+      { "type": "paragraph", "text": "Email: support@mystore.com" },
+      { "type": "paragraph", "text": "Phone: +1 234 567 890" },
+      { "type": "paragraph", "text": "Or use our online contact form on this page." },
+      { "type": "image", "src": "https://picsum.photos/800/400?random=102", "alt": "Contact Us" }
+    ]
+  },
+  "shipping": {
+    "title": "Shipping",
+    "heading": "Shipping Information",
+    "content": [
+      { "type": "paragraph", "text": "We provide fast and reliable shipping worldwide. Standard shipping is free for all orders." },
+      { "type": "paragraph", "text": "Orders are processed within 1-2 business days, and you’ll receive tracking information once your order has shipped." },
+      { "type": "image", "src": "https://picsum.photos/800/400?random=103", "alt": "Shipping Information" }
+    ]
+  },
+  "returns": {
+    "title": "Return Policy",
+    "heading": "Return & Refund Policy",
+    "content": [
+      { "type": "paragraph", "text": "We accept returns within 30 days of purchase. Products must be in original condition and packaging." },
+      { "type": "paragraph", "text": "To initiate a return, contact our support team with your order details. Refunds will be processed within 5-7 business days after receiving the returned product." },
+      { "type": "image", "src": "https://picsum.photos/800/400?random=104", "alt": "Return Policy" }
+    ]
+  }
+}
