@@ -2,32 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ShopX – Home</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyStore</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css">
 </head>
-<body data-page="home">
+<body>
 
-<div id="header"></div>
-<main class="container">
-  <h1 class="text-center mt-8 text-3xl font-bold">Featured Products</h1>
-  <div id="app-content" class="mt-8"></div>
-</main>
-<div id="footer"></div>
+  <!-- Header -->
+  <div id="header"></div>
 
-<div id="spinner" class="hidden">
-  <svg class="animate-spin" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" class="opacity-25"></circle>
-    <path fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-  </svg>
-</div>
+  <!-- Main content -->
+  <main id="main-content" class="container"></main>
 
-<script type="module">
-  import { loadShared, loadProducts } from './assets/js/spa.js';
-  import { renderHome } from './assets/js/handler.js';
-  await loadShared();
-  await loadProducts();
-  renderHome();
-</script>
+  <!-- Footer -->
+  <div id="footer"></div>
+
+  <!-- JS -->
+  <script src="/assets/js/spa.js" defer></script>
+  <script src="/assets/js/handler.js" defer></script>
 </body>
 </html>
