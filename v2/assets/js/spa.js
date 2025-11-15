@@ -1,85 +1,90 @@
-// ========================================
-// spa.js – SPA Core (Relative Imports)
-// ========================================
+/* =================================
+   LOAD HEADER & FOOTER (ONCE)
+================================= */
+async function loadHeaderFooter() {
+    if (!document.querySelector("header")) {
+        const headerRes = await fetch("/includes/header.html");
+        document.body.insertAdjacentHTML("afterbegin", await headerRes.text());
+        initHeaderMenu();
+    }
 
-const $ = s => document.querySelector(s);
-const $$ = s => document.querySelectorAll(s);
-const spinner = $('#spinner');
+    if (!document.querySelector("footer")) {
+        const footerRes = await fetch("/includes/footer.html");
+        document.body.insertAdjacentHTML("beforeend", await footerRes.text());
+    }
 
-export const showSpinner = () => spinner.classList.remove('hidden');
-export const hideSpinner = () => spinner.classList.add('hidden');
-
-export let PRODUCTS = [];
-
-export async function loadShared() {
-  const [header, footer] = await Promise.all([
-    fetch('../../includes/header.html').then(r => r.text()),
-    fetch('../../includes/footer.html').then(r => r.text())
-  ]);
-  $('#header').innerHTML = header;
-  $('#footer').innerHTML = footer;
-  attachNav();
+    bindSpaLinks(); // header/footer links
 }
 
-export function attachNav() {
-  $$('.nav-home').forEach(l => {
-    l.onclick = e => {
-      e.preventDefault();
-      history.pushState({ page: 'home' }, '', '/');
-      import('./handler.js').then(m => m.renderHome());
-    };
-  });
+/* =================================
+   HEADER MOBILE MENU
+================================= */
+function initHeaderMenu() {
+    const menuBtn = document.querySelector(".menu-btn");
+    const navMenu = document.querySelector("nav ul");
 
-  $$('.nav-page').forEach(link => {
-    link.onclick = e => {
-      e.preventDefault();
-      const url = link.getAttribute('href');
-      history.pushState({ page: 'static', url }, '', url);
-      loadStaticPage(url);
-    };
-  });
+    if (menuBtn && navMenu) {
+        menuBtn.addEventListener("click", () => navMenu.classList.toggle("show"));
+    }
 }
 
-export async function loadProducts() {
-  const res = await fetch('../../data/products.json');
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  PRODUCTS = await res.json();
-  return PRODUCTS;
+/* =================================
+   SPA LINK BINDING
+================================= */
+function bindSpaLinks() {
+    document.querySelectorAll("a[href^='/']").forEach(link => {
+        link.removeEventListener("click", link._spaHandler);
+
+        const handler = (e) => {
+            const href = link.getAttribute("href");
+            if (!href.startsWith("/")) return;
+            e.preventDefault();
+
+            // Close mobile menu if open
+            const navMenu = document.querySelector("nav ul");
+            if (navMenu && navMenu.classList.contains("show")) {
+                navMenu.classList.remove("show");
+            }
+
+            // Save index scroll
+            const currentState = history.state || {};
+            if(window.location.search === "" || window.location.pathname === "/") {
+                currentState.scrollY = window.scrollY;
+                history.replaceState(currentState, "");
+            }
+
+            // Push URL and render SPA route
+            window.history.pushState({}, "", href);
+            renderRoute();
+        };
+
+        link.addEventListener("click", handler);
+        link._spaHandler = handler;
+    });
 }
 
-export function goToProduct(id) {
-  showSpinner();
-  history.pushState({ page: 'product', id }, '', `/product?id=${id}`);
-  import('./handler.js').then(m => m.renderProduct(id).finally(hideSpinner));
+/* =================================
+   ROUTE HANDLER
+================================= */
+async function renderRoute() {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.has("id")) {
+        await renderProduct(urlParams.get("id"));
+    } else if (urlParams.has("page")) {
+        await renderPage(urlParams.get("page"));
+    } else {
+        await renderProductList();
+    }
+
+    bindSpaLinks(); // re-bind any new links in content
 }
 
-export async function loadStaticPage(url) {
-  showSpinner();
-  try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Page not found');
-    const html = await res.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-    document.title = doc.title;
-    const content = doc.querySelector('#app-content')?.innerHTML || '<p>Content missing.</p>';
-    $('#app-content').innerHTML = content;
-    $('#app-content').classList.add('page-content');
-  } catch (err) {
-    $('#app-content').innerHTML = '<p class="text-red-600 text-center">Page not found.</p>';
-  } finally {
-    hideSpinner();
-  }
-}
-
-window.addEventListener('popstate', () => {
-  const id = new URLSearchParams(location.search).get('id');
-  const state = history.state || {};
-  if (state.page === 'product' && id) {
-    import('./handler.js').then(m => m.renderProduct(id));
-  } else if (state.page === 'static') {
-    loadStaticPage(state.url);
-  } else {
-    import('./handler.js').then(m => m.renderHome());
-  }
+/* =================================
+   INITIALIZE SPA
+================================= */
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadHeaderFooter(); // load once
+    renderRoute();
+    window.addEventListener("popstate", () => renderRoute());
 });
