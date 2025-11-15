@@ -1,122 +1,201 @@
-/* ========================================
-   RESET & BASE
-   ======================================== */
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; scroll-behavior: smooth; }
-body { background:#f8fafc; color:#1e293b; min-height:100vh; display:flex; flex-direction:column; }
+/* ================================
+   IMPORT FONT
+================================= */
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+}
 
-/* ========================================
-   LAYOUT
-   ======================================== */
-.container { width:100%; max-width:1200px; margin:0 auto; padding:0 1rem; }
-.flex { display:flex; }
-.items-center { align-items:center; }
-.justify-between { justify-content:space-between; }
-.gap-6 { gap:1.5rem; }
-.h-16 { height:4rem; }
-.py-8 { padding:2rem 0; }
-.mt-8 { margin-top:2rem; }
-.text-center { text-align:center; }
+/* ================================
+   GLOBAL RESET / BASE
+================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-/* ========================================
-   TYPOGRAPHY
-   ======================================== */
-.text-3xl { font-size:1.875rem; }
-.font-bold { font-weight:700; }
-.text-indigo { color:#4f46e5; }
-.text-gray { color:#64748b; }
-.text-green { color:#10b981; }
+body {
+    background: #fafafa;
+    color: #333;
+    line-height: 1.6;
+}
 
-/* ========================================
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* ================================
    HEADER
-   ======================================== */
-header { background:white; box-shadow:0 1px 3px rgba(0,0,0,0.1); position:sticky; top:0; z-index:40; }
-header a { text-decoration:none; }
-header nav a { color:#475569; font-weight:500; padding:0.5rem 1rem; border-radius:0.375rem; }
-header nav a:hover, header nav a.active { color:#4f46e5; }
-
-/* ========================================
-   GRID
-   ======================================== */
-.grid { display:grid; gap:1.5rem; }
-.sm\\:grid-cols-2 { grid-template-columns:repeat(2, minmax(0, 1fr)); }
-.lg\\:grid-cols-3 { grid-template-columns:repeat(3, minmax(0, 1fr)); }
-.xl\\:grid-cols-4 { grid-template-columns:repeat(4, minmax(0, 1fr)); }
-
-/* ========================================
-   CARD
-   ======================================== */
-.card { background:white; border-radius:0.75rem; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); cursor:pointer; transition:transform .2s, box-shadow .2s; }
-.card:hover { transform:translateY(-4px); box-shadow:0 10px 15px -3px rgba(0,0,0,0.1); }
-.card img { width:100%; height:12rem; object-fit:cover; }
-.info { padding:1rem; }
-.price { font-size:1.25rem; font-weight:700; color:#4f46e5; }
-.original { color:#94a3b8; font-size:0.875rem; text-decoration:line-through; }
-.discount { background:#fee2e2; color:#dc2626; font-size:0.75rem; padding:0.125rem 0.5rem; border-radius:0.25rem; }
-
-/* ========================================
-   PRODUCT DETAIL (PROSE)
-   ======================================== */
-.prose h1 { font-size:1.75rem; font-weight:700; margin:2rem 0 1rem; color:#1e293b; }
-.prose p { margin-bottom:1rem; color:#475569; }
-.prose ul { list-style:disc inside; margin:1rem 0; padding-left:1rem; }
-.prose ul li { margin-bottom:0.5rem; color:#475569; }
-.prose img { width:100%; max-height:400px; object-fit:cover; border-radius:0.75rem; margin:1.5rem 0; box-shadow:0 4px 6px rgba(0,0,0,0.1); }
-
-/* ========================================
-   PAGE CONTENT (for /pages/*.html)
-   ======================================== */
-.page-content h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin: 2rem 0 1rem;
-  text-align: center;
+================================ */
+header {
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    position: sticky;
+    top: 0;
+    z-index: 20;
 }
-.page-content h2 {
-  font-size: 1.875rem;
-  font-weight: 600;
-  color: #334155;
-  margin: 1.5rem 0 0.75rem;
-  border-bottom: 2px solid #e2e8f0;
-  padding-bottom: 0.5rem;
-}
-.page-content p {
-  margin-bottom: 1rem;
-  color: #475569;
-  line-height: 1.7;
-}
-.page-content ul,
-.page-content ol {
-  margin: 1rem 0;
-  padding-left: 1.5rem;
-}
-.page-content ul { list-style: disc; }
-.page-content ol { list-style: decimal; }
-.page-content li { margin-bottom: 0.5rem; color: #475569; }
-.page-content a { color: #4f46e5; text-decoration: underline; }
-.page-content a:hover { color: #4338ca; }
 
-/* ========================================
-   SPINNER
-   ======================================== */
-#spinner {
-  position:fixed; inset:0; background:rgba(255,255,255,0.9);
-  display:flex; align-items:center; justify-content:center; z-index:9999;
+nav {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
 }
-#spinner.hidden { display:none !important; }
-#spinner svg { width:3rem; height:3rem; color:#4f46e5; animation:spin 1s linear infinite; }
-@keyframes spin { to { transform:rotate(360deg); } }
 
-/* ========================================
+nav .logo { font-size: 20px; font-weight: 600; }
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+nav ul li a {
+    font-size: 16px;
+    transition: 0.2s;
+}
+nav ul li a:hover { color: #0078ff; }
+
+.menu-btn {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Mobile menu */
+@media(max-width:768px){
+    nav ul{
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background:#fff;
+        border-bottom:1px solid #ddd;
+        display:none;
+        padding:20px 0;
+    }
+    nav ul.show{display:flex;}
+    .menu-btn{display:block;}
+}
+
+/* ================================
+   HERO
+================================ */
+.hero {
+    background: linear-gradient(135deg, #0078ff, #00c6ff);
+    color: #fff;
+    text-align: center;
+    padding: 80px 20px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+}
+.hero h1 {font-size:42px;margin-bottom:16px;}
+.hero p {font-size:20px;opacity:0.9;}
+
+/* ================================
+   PRODUCTS GRID
+================================ */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 25px;
+}
+
+.product-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.product-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+.product-card:hover .product-image img { transform: scale(1.05); }
+
+.product-image .overlay {
+    position: absolute;
+    top:0;left:0;right:0;bottom:0;
+    background: rgba(0,0,0,0.4);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    font-size:18px;
+    opacity:0;
+    transition: opacity 0.3s;
+}
+.product-card:hover .overlay {opacity:1;}
+
+.product-info {
+    padding: 15px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+.product-info h3 {font-size:18px;margin-bottom:4px;}
+.product-info .brand {font-size:14px;color:#777;margin-bottom:8px;}
+.product-info .description {font-size:14px;color:#555;margin-bottom:10px;}
+.product-info .price {font-size:16px;font-weight:bold;margin-bottom:6px;}
+.product-info .price .original {text-decoration:line-through;font-weight:normal;color:#999;margin-left:5px;}
+.product-info .shipping {font-size:12px;color:#0078ff;font-weight:bold;}
+
+/* ================================
+   PRODUCT PAGE
+================================ */
+.product-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:30px;
+    margin-top:30px;
+}
+.product-page img {
+    width:100%;
+    border-radius:12px;
+    object-fit:cover;
+}
+.product-page .product-info h1 {font-size:28px;margin-bottom:12px;}
+.product-page .product-info .brand {font-size:16px;color:#777;margin-bottom:10px;}
+.product-page .product-info .price {font-size:24px;font-weight:bold;margin-bottom:12px;}
+.product-page .product-info .description {font-size:16px;color:#555;}
+@media(max-width:768px){ .product-page {grid-template-columns:1fr;} }
+
+/* ================================
    FOOTER
-   ======================================== */
-footer { background:#1e293b; color:#e2e8f0; margin-top:auto; }
-
-/* ========================================
-   RESPONSIVE
-   ======================================== */
-@media (min-width:640px) { .sm\\:grid-cols-2 { grid-template-columns:repeat(2, minmax(0, 1fr)); } }
-@media (min-width:768px) { .md\\:grid-cols-2 { grid-template-columns:repeat(2, minmax(0, 1fr)); } }
-@media (min-width:1024px) { .lg\\:grid-cols-3 { grid-template-columns:repeat(3, minmax(0, 1fr)); } }
-@media (min-width:1280px) { .xl\\:grid-cols-4 { grid-template-columns:repeat(4, minmax(0, 1fr)); } }
+================================ */
+footer {
+    background:#f8f8f8;
+    padding:40px 20px;
+    margin-top:50px;
+}
+.footer-container {
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:30px;
+}
+.footer-col h4 {margin-bottom:12px;font-size:18px;color:#333;}
+.footer-col ul {list-style:none;}
+.footer-col ul li {margin-bottom:8px;}
+.footer-col ul li a {color:#555;transition:0.2s;}
+.footer-col ul li a:hover {color:#0078ff;}
+footer p.copy {text-align:center;margin-top:30px;color:#666;font-size:14px;}
